@@ -1,0 +1,51 @@
+.indexHeading { display: flex; justify-content: space-between; gap: 16px; margin-bottom: 16px; font: 11px var(--font-mono); letter-spacing: .1em; color: var(--ink-secondary); }
+.invitation { font: 22px var(--font-script); letter-spacing: 0; transform: rotate(-3deg); }
+.rows { border-top: 1px solid var(--border-rule); }
+.row { position: relative; border-bottom: 1px solid var(--border-rule); padding: 24px 0 16px; }
+.rowButton { display: grid; grid-template-columns: minmax(145px, 25%) minmax(0, 1fr); align-items: baseline; gap: 24px; width: 100%; min-height: 44px; text-align: left; cursor: pointer; color: var(--ink-primary); }
+.rowButton:focus-visible { outline-offset: 8px; }
+.label { font: 11px var(--font-mono); letter-spacing: .1em; color: var(--ink-secondary); transition: translate 220ms ease; }
+.value { font: 16px/1.7 var(--font-sans); letter-spacing: .025em; }
+.margins { display: flex; flex-wrap: wrap; gap: 6px 22px; min-height: 40px; margin: 12px 12px 0 calc(25% + 24px); visibility: hidden; }
+.margins span { font: 23px/1.3 var(--font-script); color: var(--accent-umber); transform: translate(-4px, 4px) rotate(0); transition: transform 260ms cubic-bezier(.2,.7,.2,1); transition-delay: calc(var(--order) * 18ms); }
+.row[data-open="true"] .margins { visibility: visible; }
+.row[data-open="true"] .margins span { transform: translate(0, 0) rotate(-3deg); }
+.row[data-open="true"] .margins span:nth-child(even) { transform: translate(3px, 3px) rotate(2deg); }
+.row[data-open="true"] .label { translate: 3px 0; }
+.across .margins { justify-content: space-between; max-width: 600px; }
+.tools .margins span { font: 11px/2 var(--font-mono); border-bottom: 1px dashed var(--border-rule); }
+.tools .margins span::before { content: "// "; color: var(--ink-secondary); }
+.writing .margins span { font-size: 22px; }
+.noteArea { position: relative; width: min(100%, 420px); height: 320px; margin-top: 32px; }
+.paper { position: absolute; top: 24px; left: 24px; width: 228px; padding: 22px 16px 19px; background: var(--bg-canvas-subtle); border: 1px solid var(--border-rule-subtle); transform: rotate(-4deg); box-shadow: 1px 4px 5px #1514120b, 3px 12px 20px -12px #15141240; transition: transform 180ms ease, box-shadow 180ms ease; }
+.paper::before { content: ""; position: absolute; width: 66px; height: 18px; top: -9px; left: 79px; background: var(--accent-tape); border: 1px solid var(--accent-tape-border); opacity: .8; transform: rotate(3deg); pointer-events: none; }
+.noteHandle { display: block; width: 100%; min-height: 44px; padding: 0 0 9px; border-bottom: 1px solid var(--border-rule); color: var(--ink-primary); font: 25px/1.2 var(--font-script); text-align: center; }
+.noteFlow { display: flex; flex-direction: column; align-items: center; margin-top: 10px; font: 21px/1.15 var(--font-script); color: var(--ink-secondary); }
+.noteFlow span:nth-child(even) { font-size: 19px; line-height: 1; margin: 3px 0; color: var(--accent-umber); }
+.noteHelp { position: absolute; bottom: 0; left: 12px; font: 9px/1.6 var(--font-mono); color: var(--ink-secondary); }
+.desktopHelp { display: none; }
+@media (min-width: 1024px) and (pointer: fine) {
+  .noteHandle { cursor: grab; touch-action: none; user-select: none; }
+  .paper[data-grabbed="true"] { transform: rotate(-1deg) scale(1.015); box-shadow: 2px 14px 22px -8px #15141240; }
+  .paper[data-grabbed="true"] .noteHandle { cursor: grabbing; }
+  .desktopHelp { display: inline; }
+  .mobileHelp { display: none; }
+}
+@media (max-width: 639px) {
+  .indexHeading { flex-direction: column; gap: 8px; }
+  .invitation { align-self: flex-end; }
+  .rowButton { grid-template-columns: 1fr; gap: 8px; }
+  .value { font-size: 14px; }
+  .margins { margin-left: 12px; min-height: 54px; gap: 5px 18px; }
+  .margins span, .writing .margins span { font-size: 21px; }
+  .across .margins { justify-content: flex-start; }
+  .tools .margins span { font-size: 11px; }
+  .noteArea { margin-top: 24px; height: 310px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .label, .margins span, .paper { transition: none; }
+  .row[data-open="true"] .label { translate: none; }
+  .row[data-open="true"] .margins span,
+  .row[data-open="true"] .margins span:nth-child(even) { transform: none; }
+  .paper[data-grabbed="true"] { transform: rotate(-4deg); }
+}

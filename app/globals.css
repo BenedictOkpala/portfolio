@@ -1,26 +1,130 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  /* Warm editorial paper canvas tokens */
+  --bg-canvas: #F5F2EC;
+  --bg-canvas-subtle: #EBE5DC;
+  --bg-canvas-muted: #E0D9CD;
+  
+  /* High-contrast dark field tokens */
+  --bg-plate-dark: #0D0E13;
+  --bg-plate-dark-card: #151722;
+  --bg-plate-dark-highlight: rgba(255, 255, 255, 0.04);
+
+  /* Editorial Inks (Foreground) */
+  --ink-primary: #151412;
+  --ink-secondary: #58544C;
+  --ink-muted: #8C867B;
+  --ink-faint: #B8B2A6;
+
+  /* Inks inside dark plates */
+  --ink-dark-primary: #F4F1EB;
+  --ink-dark-secondary: #A09D95;
+  --ink-dark-muted: #66635C;
+
+  /* Delicate print rules and borders */
+  --border-rule: rgba(21, 20, 18, 0.12);
+  --border-rule-subtle: rgba(21, 20, 18, 0.06);
+  --border-dark-rule: rgba(244, 241, 235, 0.12);
+
+  /* Restrained tactile accents */
+  --accent-umber: #846849;
+  --accent-tape: #E6E1D1;
+  --accent-tape-border: #D5CEBA;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+@theme {
+  --color-canvas: var(--bg-canvas);
+  --color-canvas-subtle: var(--bg-canvas-subtle);
+  --color-canvas-muted: var(--bg-canvas-muted);
+  --color-plate-dark: var(--bg-plate-dark);
+  --color-plate-dark-card: var(--bg-plate-dark-card);
+  --color-plate-dark-highlight: var(--bg-plate-dark-highlight);
+
+  --color-ink: var(--ink-primary);
+  --color-ink-secondary: var(--ink-secondary);
+  --color-ink-muted: var(--ink-muted);
+  --color-ink-faint: var(--ink-faint);
+
+  --color-dark-ink: var(--ink-dark-primary);
+  --color-dark-secondary: var(--ink-dark-secondary);
+  --color-dark-muted: var(--ink-dark-muted);
+
+  --color-rule: var(--border-rule);
+  --color-rule-subtle: var(--border-rule-subtle);
+  --color-dark-rule: var(--border-dark-rule);
+
+  --color-umber: var(--accent-umber);
+  --color-tape: var(--accent-tape);
+  --color-tape-border: var(--accent-tape-border);
+
+  --font-serif: var(--font-serif), Georgia, Cambria, "Times New Roman", Times, serif;
+  --font-sans: var(--font-sans), -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --font-mono: var(--font-mono), ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  --font-script: var(--font-script), "Caveat", "Brush Script MT", cursive;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+html {
+  background-color: var(--bg-canvas);
+  color: var(--ink-primary);
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Custom editorial focus ring for keyboard accessibility */
+:focus-visible {
+  outline: 1.5px solid var(--ink-primary);
+  outline-offset: 3px;
+}
+
+/* Small editorial text uses the existing readable ink; faint marks retain their token. */
+.text-ink-muted {
+  color: var(--ink-secondary);
+}
+
+/* Subtle print hairline styling */
+.hairline-b {
+  border-bottom: 1px solid var(--border-rule);
+}
+
+.hairline-t {
+  border-top: 1px solid var(--border-rule);
+}
+
+.hairline-x {
+  border-left: 1px solid var(--border-rule);
+  border-right: 1px solid var(--border-rule);
+}
+
+/* Delicate editorial registration crosshair */
+.crosshair {
+  position: relative;
+}
+.crosshair::before {
+  content: "+";
+  position: absolute;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--ink-muted);
+  line-height: 1;
+}
+
+/* Preserve the curated writing gestures while supporting keyboard and reduced motion. */
+[data-selected-writing] a:focus-visible h3 {
+  color: var(--ink-primary);
+  translate: 4px 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  [data-selected-writing] a,
+  [data-selected-writing] a * {
+    transition: none !important;
+    transform: none !important;
+    translate: none !important;
   }
-}
-
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  nav[aria-label="Main Navigation"] a,
+  nav[aria-label="Main Navigation"] a span {
+    transition: none !important;
+  }
 }
